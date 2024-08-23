@@ -23,10 +23,10 @@ This Pokémon API is a web application designed to allow users to browse through
 - Version Control: Git
 
 # Weekly Updates
-- Week 1: Set up the project structure, implement user authentication, and retrieve Pokémon data from
-- Week 2: Implement favourite Pokémon feature, add error handling, and improve responsive design
-- Week 3: Implement state management using Redux, add styling with Material UI, and improve testing
-- Week 4: Deploy the application on Netlify, add version control with Git, and finalize
+- Week 1(Aug 25) : Set up the project structure, implement user authentication, and retrieve Pokémon data from API
+- Week 2(Sept 1st): Implement favourite Pokémon feature, add error handling, and improve responsive design
+- Week 3(Sept 8): Implement state management using Redux, add styling with Material UI, and improve testing
+- Week 4(Sept 15): Deploy the application on Netlify, add version control with Git, and finalize
 
 # Roadmap
 - [ ] Feature 1: User Authentication
