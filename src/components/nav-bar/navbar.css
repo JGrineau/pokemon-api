@@ -1,0 +1,28 @@
+
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 2;
+    background: transparent;
+    width: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    overflow-x: hidden !important;
+    border: 2px solid black;
+}
+.right-nav{
+    display: flex; 
+    align-items: center; 
+}
+.left-nav{
+    display: flex;
+    align-items: center;
+}
+.nav-item{
+    margin: 10px;
+    padding: 10px;
+
+}
