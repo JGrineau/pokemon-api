@@ -26,3 +26,9 @@
     padding: 10px;
 
 }
+.pokeball {
+    width: auto; /* Allows natural size */
+    height: auto; /* Allows natural size */
+    max-width: 100%; /* Responsive max size */
+    max-height: 100%; /* Responsive max size */
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import './navbar.css'
 import Button from '../button/Button'
+import Pokeball from '/pokemon-api/src/assets/pokeball1.jpg'
 
 const NavBar = () => {
 
@@ -15,16 +16,16 @@ const NavBar = () => {
             <a className='nav-item' href='#'>Pokedex</a>
         </div>
 
-        <div className='logo'>
-        <img src='your-logo-url-here.png' alt='Logo' />
+        <div className='logo' >
+         <img className='pokeball' src={Pokeball} onClick={pokedexClick} />
         </div>
 
         <div className='right-nav'>
             
             
                 <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Home" />
-                <a className='nav-item' href='#'>Login</a>
-                <a className='nav-item' href='#'>Sign Up</a>
+                <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Login" />
+                <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Signup" />
         </div> 
     </div> /*navbar */
   )
