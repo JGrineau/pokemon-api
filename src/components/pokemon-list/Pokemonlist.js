@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './pokemonlist.css';
 
 const MAX_POKEMON = 151;
 
@@ -9,35 +11,40 @@ function PokemonList() {
   const [filterByNumber, setFilterByNumber] = useState(false);
   const [filterByName, setFilterByName] = useState(false);
   const [notFoundMessage, setNotFoundMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setAllPokemons(data.results);
-        setFilteredPokemons(data.results);
-      });
+    fetchPokemons();
   }, []);
+
+  const fetchPokemons = async () => {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${MAX_POKEMON}`);
+      const data = await response.json();
+      setAllPokemons(data.results);
+      setFilteredPokemons(data.results);
+    } catch (error) {
+      console.error("Failed to fetch Pokemon list:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchPokemonDataBeforeRedirect = async (id) => {
     try {
-      const [pokemon, pokemonSpecies] = await Promise.all([
+      await Promise.all([
         fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) => res.json()),
         fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) => res.json()),
       ]);
-      return true;
+      navigate(`/pokemon/${id}`);
     } catch (error) {
-      console.error("Failed to fetch Pokemon data before redirect");
-      return false;
+      console.error("Failed to fetch Pokemon data:", error);
     }
   };
 
   const displayPokemons = (pokemonList) => {
-    if (pokemonList.length === 0) {
-      setNotFoundMessage(true);
-    } else {
-      setNotFoundMessage(false);
-    }
+    setNotFoundMessage(pokemonList.length === 0);
     setFilteredPokemons(pokemonList);
   };
 
@@ -45,19 +52,21 @@ function PokemonList() {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
 
-    let filteredList;
-    if (filterByNumber) {
-      filteredList = allPokemons.filter((pokemon) => {
+    if (!term) {
+      displayPokemons(allPokemons);
+      return;
+    }
+
+    let filteredList = allPokemons.filter((pokemon) => {
+      if (filterByNumber) {
         const pokemonID = pokemon.url.split("/")[6];
         return pokemonID.startsWith(term);
-      });
-    } else if (filterByName) {
-      filteredList = allPokemons.filter((pokemon) =>
-        pokemon.name.toLowerCase().startsWith(term)
-      );
-    } else {
-      filteredList = allPokemons;
-    }
+      }
+      if (filterByName) {
+        return pokemon.name.toLowerCase().startsWith(term);
+      }
+      return true;
+    });
 
     displayPokemons(filteredList);
   };
@@ -74,19 +83,36 @@ function PokemonList() {
     displayPokemons(allPokemons);
   };
 
+  if (isLoading) {
+    return (
+      <div className="pokemon-list-container">
+        <div className="loading-spinner">
+          <div className="spinner"></div>
+          <p>Loading Pokémon...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="pokemon-list-container">
       <div className="search-bar">
-        <input
-          type="text"
-          id="search-input"
-          value={searchTerm}
-          onChange={handleSearch}
-          placeholder="Search Pokémon..."
-        />
-        <button onClick={clearSearch} className="search-close-icon">Clear</button>
-        <div>
-          <label>
+        <div className="search-input-wrapper">
+          <input
+            type="text"
+            id="search-input"
+            value={searchTerm}
+            onChange={handleSearch}
+            placeholder="Search Pokémon by name or number..."
+          />
+          {searchTerm && (
+            <button onClick={clearSearch} className="search-close-icon">
+              ✕
+            </button>
+          )}
+        </div>
+        <div className="filter-options">
+          <label className="filter-label">
             <input
               type="radio"
               id="number"
@@ -95,7 +121,7 @@ function PokemonList() {
             />
             Filter by Number
           </label>
-          <label>
+          <label className="filter-label">
             <input
               type="radio"
               id="name"
@@ -107,7 +133,11 @@ function PokemonList() {
         </div>
       </div>
       
-      {notFoundMessage && <p id="not-found-message">No Pokémon found</p>}
+      {notFoundMessage && (
+        <p id="not-found-message">
+          No Pokémon found matching your search criteria
+        </p>
+      )}
 
       <div className="list-wrapper">
         {filteredPokemons.map((pokemon) => {
@@ -116,20 +146,16 @@ function PokemonList() {
             <div
               key={pokemonID}
               className="list-item"
-              onClick={async () => {
-                const success = await fetchPokemonDataBeforeRedirect(pokemonID);
-                if (success) {
-                  window.location.href = `./detail.html?id=${pokemonID}`;
-                }
-              }}
+              onClick={() => fetchPokemonDataBeforeRedirect(pokemonID)}
             >
               <div className="number-wrap">
-                <p className="caption-fonts">#{pokemonID}</p>
+                <p className="caption-fonts">#{pokemonID.padStart(3, '0')}</p>
               </div>
               <div className="img-wrap">
                 <img
                   src={`https://raw.githubusercontent.com/pokeapi/sprites/master/sprites/pokemon/other/dream-world/${pokemonID}.svg`}
                   alt={pokemon.name}
+                  loading="lazy"
                 />
               </div>
               <div className="name-wrap">
