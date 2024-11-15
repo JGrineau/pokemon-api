@@ -1,28 +1,118 @@
-
-.navbar{
+.navbar {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     position: fixed;
     z-index: 2;
-    background: transparent;
     width: 100%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    overflow-x: hidden !important;
-    border: 2px solid black;
+    padding: 0.8rem 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
 }
-.right-nav{
+
+.right-nav {
     display: flex; 
-    align-items: center; 
+    align-items: center;
+    gap: 1rem;
 }
-.left-nav{
+
+.left-nav {
     display: flex;
     align-items: center;
 }
-.nav-item{
-    margin: 10px;
-    padding: 10px;
 
+.nav-item {
+    text-decoration: none;
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+a.nav-item {
+    position: relative;
+    padding: 0.5rem 1rem;
+}
+
+a.nav-item::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: #3498db;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+a.nav-item:hover::after {
+    width: 80%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 2rem;
+}
+
+.pokeball {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.pokeball:hover {
+    transform: rotate(20deg);
+}
+
+/* Custom styles for the Button component when used in navbar */
+.nav-item.btn {
+    margin: 0;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.nav-item.btn.primary {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+}
+
+.nav-item.btn.primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+    background: linear-gradient(135deg, #2980b9, #2573a7);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.6rem 1rem;
+    }
+
+    .logo {
+        margin: 0 1rem;
+    }
+
+    .nav-item.btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
 }

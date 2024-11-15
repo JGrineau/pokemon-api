@@ -1,47 +1,65 @@
 import React from 'react'
+import { useNavigate, Link } from 'react-router-dom'
 import './navbar.css'
 import Button from '../button/Button'
 import Pokeball from '/pokemon-api/src/assets/pokeball1.jpg'
 
 const NavBar = () => {
+  const navigate = useNavigate();
 
-  const pokedexClick = () =>{
-    console.log('Button clicked')
+  const pokedexClick = () => {
+    navigate('/');
+  }
+
+  const handleLogin = () => {
+    navigate('/login');
+  }
+
+  const handleHome = () => {
+    navigate('/');
+  }
+
+  const handleSignup = () => {
+    navigate('/signup');
   }
 
   return (
-    <div className='navbar'>
-
+    <nav className='navbar'>
         <div className='left-nav'>
-            <a className='nav-item' href='#'>Pokedex</a>
+            <Link to="/" className='nav-item'>Pokédex</Link>
         </div>
 
-        <div className='logo' >
-         <img className='pokeball' src={Pokeball} onClick={pokedexClick} />
+        <div className='logo'>
+          <img 
+            className='pokeball' 
+            src={Pokeball} 
+            onClick={pokedexClick} 
+            alt="Pokéball"
+          />
         </div>
 
         <div className='right-nav'>
-            
-            
-                <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Home" />
-                <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Login" />
-                <Button variant={"primary"} className='nav-item' onClick={pokedexClick} text="Signup" />
+            <Button 
+              variant="primary" 
+              className='nav-item' 
+              onClick={handleHome} 
+              text="Home" 
+            />
+            <Button 
+              variant="primary" 
+              className='nav-item' 
+              onClick={handleLogin} 
+              text="Login" 
+            />
+            <Button 
+              variant="primary" 
+              className='nav-item' 
+              onClick={handleSignup} 
+              text="Sign Up" 
+            />
         </div> 
-    </div> /*navbar */
+    </nav>
   )
 }
 
 export default NavBar
-
-
-
-
-
-
-
-
-
-
-
-
-
