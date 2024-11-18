@@ -15,6 +15,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 40px;
 }
 
 .header-wrap {
@@ -185,18 +186,28 @@
 
 .progress-bar {
     width: 100%;
-    height: 8px;
-    border-radius: 4px;
+    height: 12px;
+    border-radius: 6px;
     overflow: hidden;
-    background-color: var(--progress-background);
+    background-color: #e0e0e0;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .progress-bar::-webkit-progress-value {
     background-color: var(--progress-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease;
 }
 
 .progress-bar::-webkit-progress-bar {
-    background-color: var(--progress-background);
+    background-color: #e0e0e0;
+}
+
+/* For Firefox */
+.progress-bar::-moz-progress-bar {
+    background-color: var(--progress-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: width 0.3s ease;
 }
 
 .detail-bg {

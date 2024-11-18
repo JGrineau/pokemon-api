@@ -17,7 +17,9 @@
 
 .search-input-wrapper {
     position: relative;
-    margin-bottom: 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 1.5rem;
 }
 
 #search-input {
@@ -28,6 +30,8 @@
     font-size: 1.1rem;
     transition: all 0.3s ease;
     background: white;
+    align-items: center;
+    justify-content: center;
 }
 
 #search-input:focus {
@@ -239,5 +243,15 @@
 
     .img-wrap {
         height: 100px;
+    }
+
+    .search-input-wrapper {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-input-wrapper {
+        max-width: 95%;
     }
 }

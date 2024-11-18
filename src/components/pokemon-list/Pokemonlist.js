@@ -58,14 +58,8 @@ function PokemonList() {
     }
 
     let filteredList = allPokemons.filter((pokemon) => {
-      if (filterByNumber) {
-        const pokemonID = pokemon.url.split("/")[6];
-        return pokemonID.startsWith(term);
-      }
-      if (filterByName) {
-        return pokemon.name.toLowerCase().startsWith(term);
-      }
-      return true;
+      const pokemonID = pokemon.url.split("/")[6];
+      return pokemon.name.toLowerCase().includes(term) || pokemonID.includes(term);
     });
 
     displayPokemons(filteredList);
