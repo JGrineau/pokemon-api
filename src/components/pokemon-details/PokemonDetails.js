@@ -1,64 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { usePokemonDetails } from '../../hooks/usePokemonDetails';
 import './PokemonDetails.css';
+
+const typeColors = {
+    normal: "#A8A878",
+    fire: "#F08030",
+    water: "#6890F0",
+    electric: "#F8D030",
+    grass: "#78C850",
+    ice: "#98D8D8",
+    fighting: "#C03028",
+    poison: "#A040A0",
+    ground: "#E0C068",
+    flying: "#A890F0",
+    psychic: "#F85888",
+    bug: "#A8B820",
+    rock: "#B8A038",
+    ghost: "#705898",
+    dragon: "#7038F8",
+    dark: "#705848",
+    steel: "#B8B8D0",
+    fairy: "#EE99AC"
+};
 
 const PokemonDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const [pokemon, setPokemon] = useState(null);
-    const [pokemonSpecies, setPokemonSpecies] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const {
+        pokemon,
+        isLoading,
+        error,
+        getEnglishFlavorText,
+        handlePrevPokemon,
+        handleNextPokemon,
+        MAX_POKEMON
+    } = usePokemonDetails(id);
 
-    useEffect(() => {
-        const fetchPokemonData = async () => {
-            try {
-                setIsLoading(true);
-                const [pokemonResponse, speciesResponse] = await Promise.all([
-                    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`),
-                    fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
-                ]);
-
-                if (!pokemonResponse.ok || !speciesResponse.ok) {
-                    throw new Error('Pokemon not found');
-                }
-
-                const [pokemonData, speciesData] = await Promise.all([
-                    pokemonResponse.json(),
-                    speciesResponse.json()
-                ]);
-
-                setPokemon(pokemonData);
-                setPokemonSpecies(speciesData);
-            } catch (error) {
-                setError(error.message);
-                console.error('Error fetching Pokemon:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchPokemonData();
-    }, [id]);
-
-    const handlePrevPokemon = () => {
-        if (parseInt(id) > 1) {
-            navigate(`/pokemon/${parseInt(id) - 1}`);
-        }
-    };
-
-    const handleNextPokemon = () => {
-        if (parseInt(id) < 151) {
-            navigate(`/pokemon/${parseInt(id) + 1}`);
-        }
+    const getMainTypeColor = () => {
+        if (!pokemon || !pokemon.types.length) return '#A8A878';
+        const mainType = pokemon.types[0].type.name;
+        return typeColors[mainType] || '#A8A878';
     };
 
     if (error) {
         return (
             <div className="detail-main main">
-                <h2>Error</h2>
-                <p>{error}</p>
-                <button onClick={() => navigate('/')}>Back to List</button>
+                <div className="error-container">
+                    <h2>Error</h2>
+                    <p>{error}</p>
+                    <button onClick={() => navigate('/')}>Back to List</button>
+                </div>
             </div>
         );
     }
@@ -74,23 +66,22 @@ const PokemonDetails = () => {
         );
     }
 
+    const mainColor = getMainTypeColor();
+    const mainStyle = {
+        backgroundColor: mainColor,
+        borderColor: mainColor
+    };
+
     return (
-        <main className="detail-main main">
+        <main className="detail-main main" style={mainStyle}>
             <header className="header">
                 <div className="header-wrapper">
                     <div className="header-wrap">
                         <a onClick={() => navigate('/')} className="back-btn-wrap" style={{ cursor: 'pointer' }}>
-                            <img
-                                src="/assets/back-to-home.svg"
-                                alt="back to home"
-                                className="back-btn"
-                                id="back-btn"
-                            />
+                            <img src="/assets/back-to-home.svg" alt="back to home" className="back-btn" />
                         </a>
                         <div className="name-wrap">
-                            <h1 className="name">
-                                {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
-                            </h1>
+                            <h1 className="name">{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h1>
                         </div>
                     </div>
                     <div className="pokemon-id-wrap">
@@ -99,20 +90,34 @@ const PokemonDetails = () => {
                 </div>
             </header>
             <div className="featured-img">
-                <a href="#" className="arrow left-arrow" onClick={handlePrevPokemon}>
-                    <img src="/assets/chevron_left.svg" alt="back" />
-                </a>
+                {parseInt(id) > 1 && (
+                    <a href="#" className="arrow left-arrow" onClick={handlePrevPokemon}>
+                        <img src="/assets/chevron_left.svg" alt="back" />
+                    </a>
+                )}
                 <div className="detail-img-wrapper">
-                    <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+                    <img 
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
+                        alt={pokemon.name}
+                        onError={(e) => {
+                            e.target.src = pokemon.sprites.front_default;
+                        }}
+                    />
                 </div>
-                <a href="#" className="arrow right-arrow" onClick={handleNextPokemon}>
-                    <img src="/assets/chevron_right.svg" alt="forward" />
-                </a>
+                {parseInt(id) < MAX_POKEMON && (
+                    <a href="#" className="arrow right-arrow" onClick={handleNextPokemon}>
+                        <img src="/assets/chevron_right.svg" alt="forward" />
+                    </a>
+                )}
             </div>
             <div className="detail-card-detail-wrapper">
                 <div className="power-wrapper">
                     {pokemon.types.map((type, index) => (
-                        <p key={index} className={`body3-fonts type ${type.type.name}`}>
+                        <p 
+                            key={index} 
+                            className={`body3-fonts type ${type.type.name}`}
+                            style={{ backgroundColor: typeColors[type.type.name] }}
+                        >
                             {type.type.name}
                         </p>
                     ))}
@@ -145,20 +150,24 @@ const PokemonDetails = () => {
                     </div>
                 </div>
                 <p className="body3-fonts pokemon-description">
-                    {pokemonSpecies?.flavor_text_entries.find(entry => entry.language.name === 'en')?.flavor_text.replace(/\\f/g, ' ')}
+                    {getEnglishFlavorText()}
                 </p>
                 <p className="body2-fonts about-text">Base Stats</p>
                 <div className="stats-wrapper">
-                    {pokemon.stats.slice(0, 4).map((stat, index) => (
+                    {pokemon.stats.map((stat, index) => (
                         <div key={index} className="stats-wrap" data-stat={stat.stat.name}>
-                            <p className="body3-fonts stats">
+                            <p className="body3-fonts stats" style={{ color: mainColor }}>
                                 {stat.stat.name.toUpperCase().slice(0, 4)}
                             </p>
-                            <p className="body3-fonts">{stat.base_stat}</p>
+                            <p className="body3-fonts">{String(stat.base_stat).padStart(3, '0')}</p>
                             <progress 
                                 value={stat.base_stat} 
                                 max="100" 
                                 className="progress-bar"
+                                style={{
+                                    '--progress-color': mainColor,
+                                    '--progress-background': `${mainColor}80`
+                                }}
                             ></progress>
                         </div>
                     ))}

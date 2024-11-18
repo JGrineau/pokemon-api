@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/nav-bar/NavBar';
 import Login from './components/login-page/Login';
 import PokemonList from './components/pokemon-list/Pokemonlist';
+import PokemonDetails from './components/pokemon-details/PokemonDetails';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PokemonList />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/pokemon/:id" element={<PokemonDetails />} />
       </Routes>
     </Router>
   );
