@@ -6,7 +6,7 @@
     position: fixed;
     z-index: 2;
     width: 100%;
-    padding: 0.8rem 4rem;
+    /* padding: 0.8rem 4rem; */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -24,36 +24,6 @@
 .left-nav {
     display: flex;
     align-items: center;
-    margin-left: 2rem;
-}
-
-.nav-item {
-    text-decoration: none;
-    color: #2c3e50;
-    font-weight: 500;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-a.nav-item {
-    position: relative;
-    padding: 0.5rem 1rem;
-}
-
-a.nav-item::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 50%;
-    background-color: #3498db;
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-a.nav-item:hover::after {
-    width: 80%;
 }
 
 .logo {
@@ -66,7 +36,13 @@ a.nav-item:hover::after {
     border-radius: 50%;
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin: 0 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 .pokeball {
@@ -167,4 +143,101 @@ a.nav-item:hover::after {
         width: 35px;
         height: 35px;
     }
+}
+
+/* Hamburger Menu Styles */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 24px;
+    position: relative;
+    z-index: 100;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #2c3e50;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+/* Media Queries for Tablet and Mobile */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .hamburger {
+        display: block;
+        margin-left: auto;
+    }
+
+    .right-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 250px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 80px 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        margin: 0;
+    }
+
+    .right-nav.active {
+        right: 0;
+    }
+
+    .right-nav .nav-item {
+        margin: 1rem 0;
+        width: 100%;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+
+    .left-nav {
+        margin: 0;
+    }
+}
+
+/* Small mobile devices */
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 0.8rem 1rem;
+    }
+
+    .right-nav {
+        width: 220px;
+    }
+
+    .logo {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Hamburger Animation */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
 }
