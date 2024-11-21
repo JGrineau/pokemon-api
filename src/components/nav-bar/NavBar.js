@@ -34,10 +34,24 @@ const NavBar = () => {
   return (
     <nav className='navbar'>
         <div className='left-nav'>
+            <Link to="/" className='nav-item desktop-only'>Pokédex</Link>
+        </div>
+
+        <div className='mobile-nav'>
+          <div className='logo mobile-logo' onClick={pokedexClick}>
+            <img 
+              className='pokeball' 
+              src={Pokeball}
+              alt="Pokéball"
+            />
+          </div>
+        </div>
+
+        <div className='center-logo desktop-only'>
           <div className='logo' onClick={pokedexClick}>
             <img 
               className='pokeball' 
-              src={Pokeball} 
+              src={Pokeball}
               alt="Pokéball"
             />
           </div>
