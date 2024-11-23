@@ -9,7 +9,7 @@
 
 .login-card {
     background: white;
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -19,24 +19,24 @@
 .login-card h2 {
     text-align: center;
     color: #333;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-size: 1.8rem;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: #555;
     font-weight: 500;
 }
 
 .form-group input {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
     border: 2px solid #e1e1e1;
     border-radius: 5px;
     font-size: 1rem;
@@ -50,7 +50,8 @@
 
 .login-button {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.875rem;
+    margin-top: 1rem;
     background-color: #1e90ff;
     color: white;
     border: none;
@@ -72,7 +73,7 @@
 
 @media (max-width: 480px) {
     .login-card {
-        padding: 1.5rem;
+        padding: 2rem;
     }
     
     .login-card h2 {
