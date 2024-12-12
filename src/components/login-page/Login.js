@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import Button from '../button/Button';
 import './Login.css';
@@ -16,10 +15,26 @@ const Login = () => {
         setLoading(true);
 
         try {
-            const auth = getAuth();
-            await signInWithEmailAndPassword(auth, email, password);
+            const response = await fetch('http://localhost:5000/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Login failed');
+            }
+
+            // Store the token in localStorage
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+
             toast.success('Login successful!');
-            navigate('/dashboard'); // Redirect to dashboard after successful login
+            navigate('/'); // Redirect to Pokedex after successful login
         } catch (error) {
             toast.error(error.message);
         } finally {
@@ -58,7 +73,6 @@ const Login = () => {
                         type="submit" 
                         variant="primary"
                         className="login-button"
-                        onClick={(e) => handleSubmit(e)}
                         text={loading ? 'Logging in...' : 'Login'}
                         disabled={loading}
                     />
