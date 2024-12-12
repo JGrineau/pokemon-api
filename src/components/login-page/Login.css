@@ -4,7 +4,6 @@
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #1e90ff, #70a1ff);
-    padding: 20px;
 }
 
 .login-card {
