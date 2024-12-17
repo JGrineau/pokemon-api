@@ -34,7 +34,7 @@ db.getConnection()
 
   app.get('/', async (req, res) => {
     try {
-      const [results] = await db.query("INSERT INTO signup (id, email, password, username) VALUES ('1', 'lU2XK@example.com', 'password123', 'John Doe')");
+      const [results] = await db.query("INSERT INTO signup (username, email, password) VALUES ('example 2', 'example@example.com', 'password1234')");
       console.log(results);
       res.send('User inserted successfully');
     } catch (err) {
