@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './signup.css';
 
 const Signup = () => {
@@ -45,9 +46,19 @@ const Signup = () => {
         e.preventDefault();
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
-            // Here you would typically make an API call to register the user
-            console.log('Form submitted:', formData);
-            navigate('/login');
+            // Send a POST request to the server using axios
+            axios.post('http://localhost:5000/signup', {
+                username: formData.username,
+                email: formData.email,
+                password: formData.password
+            })
+            .then(response => {
+                console.log('Success:', response.data);
+                navigate('/login');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         } else {
             setErrors(newErrors);
         }
