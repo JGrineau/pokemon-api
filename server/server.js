@@ -4,10 +4,13 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const db = require('./config/database');
 const app = express();
+const bodyParser = require('body-parser');
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended: flase}));
+app.use(bodyParser.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -32,11 +35,12 @@ db.getConnection()
   //   })
   // });
 
-  app.get('/', async (req, res) => {
+  app.post('/signup', async (req, res) => {
+    const { username, email, password } = req.body;
     try {
-      const [results] = await db.query("INSERT INTO signup (username, email, password) VALUES ('example 2', 'example@example.com', 'password1234')");
+      const [results] = await db.query("INSERT INTO signup (username, email, password) VALUES (?, ?, ?)", [username, email, password]);
       console.log(results);
-      res.send('User inserted successfully');
+      res.send({username: username});
     } catch (err) {
       console.error(err);
       res.status(500).send('Error inserting user');
