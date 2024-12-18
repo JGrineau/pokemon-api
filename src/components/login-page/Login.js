@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import Button from '../button/Button';
+import axios from 'axios';
 import './Login.css';
 
 const Login = () => {
@@ -14,29 +15,24 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
 
+        console.log('Starting login process');
+        console.log('Submitting login request with:', { email, password });
+
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
+            const response = await axios.post('http://localhost:5000/api/auth/login', { 
+                email, 
+                password 
             });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Login failed');
+            
+            console.log('Login successful:', response.data);
+            
+            if (response.data.message === 'Login successful') {
+                // Redirect to home page on successful login
+                navigate('/');
             }
-
-            // Store the token in localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-
-            toast.success('Login successful!');
-            navigate('/'); // Redirect to Pokedex after successful login
         } catch (error) {
-            toast.error(error.message);
+            console.error('Login error:', error.response?.data || error.message);
+            // You can add error handling UI here if needed
         } finally {
             setLoading(false);
         }
