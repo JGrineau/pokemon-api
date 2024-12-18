@@ -38,7 +38,7 @@ app.use('/api/auth', authRoutes);
   app.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
     try {
-      const [results] = await db.query("INSERT INTO signup (username, email, password) VALUES (?, ?, ?)", [username, email, password]);
+      const [results] = await db.query("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, password]);
       console.log(results);
       res.send({username: username});
     } catch (err) {
