@@ -6,39 +6,55 @@
 
 /* Search Section Styles */
 .search-bar {
-    max-width: 800px;
-    margin: 0 auto 2rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+    position: sticky;
+    top: 6rem;
+    z-index: 10;
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.search-bar.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
 }
 
 .search-input-wrapper {
     position: relative;
     width: 100%;
-    max-width: 700px;
-    margin: 0 auto 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.search-input-wrapper:focus-within {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
 #search-input {
     width: 100%;
-    border: 2px solid #e1e4e8;
-    border-radius: 12px;
+    border: none;
+    border-radius: 20px;
     font-size: 1.1rem;
+    padding: 1.2rem 3rem 1.2rem 1.5rem;
+    background: transparent;
+    color: #2c3e50;
     transition: all 0.3s ease;
-    background: white;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 5px;
-    margin-top: 5px;
+}
+
+#search-input::placeholder {
+    color: #95a5a6;
 }
 
 #search-input:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 .search-close-icon {
@@ -48,41 +64,62 @@
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #666;
+    color: #95a5a6;
     cursor: pointer;
     padding: 0.5rem;
-    border-radius: 6px;
+    border-radius: 50%;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
 }
 
 .search-close-icon:hover {
-    background: #f1f1f1;
-    color: #333;
+    background: rgba(0, 0, 0, 0.05);
+    color: #2c3e50;
 }
 
-.filter-options {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    padding-top: 1rem;
+/* Navbar Search Icon */
+.navbar-search-icon {
+    position: fixed;
+    top: 1rem;
+    left: 8.5rem;  
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
 }
 
-.filter-label {
+.navbar-search-icon.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.search-icon-btn {
+    background: none;
+    border: none;
+    color: #fff;  
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
-.filter-label:hover {
-    background: rgba(52, 152, 219, 0.1);
+.search-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);  
+    transform: scale(1.1);
 }
 
-.filter-label input[type="radio"] {
-    margin: 0;
+.search-icon-btn svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Pokemon List Grid */
@@ -217,20 +254,25 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .pokemon-list-container {
         padding: 6rem 1rem 1rem;
     }
 
     .search-bar {
-        padding: 1rem;
-        margin-bottom: 1.5rem;
+        width: 95%;
+        margin-bottom: 2rem;
+        top: 5rem;
     }
 
-    .filter-options {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+    #search-input {
+        font-size: 1rem;
+        padding: 1rem 2.5rem 1rem 1.2rem;
+    }
+
+    .search-close-icon {
+        width: 25px;
+        height: 25px;
     }
 
     .list-wrapper {
@@ -249,10 +291,33 @@
     .search-input-wrapper {
         max-width: 90%;
     }
+
+    .navbar-search-icon {
+        left: 7rem;
+        top: 0.8rem;
+    }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
+    .search-bar {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        top: 4rem;
+    }
+
+    .search-input-wrapper {
+        border-radius: 16px;
+    }
+
+    #search-input {
+        padding: 0.9rem 2.2rem 0.9rem 1rem;
+    }
+
     .search-input-wrapper {
         max-width: 95%;
+    }
+
+    .navbar-search-icon {
+        left: 6rem;
     }
 }

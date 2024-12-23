@@ -8,15 +8,29 @@ function PokemonList() {
   const [allPokemons, setAllPokemons] = useState([]);
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterByNumber, setFilterByNumber] = useState(false);
-  const [filterByName, setFilterByName] = useState(false);
   const [notFoundMessage, setNotFoundMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchPokemons();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    setIsScrolled(scrollPosition > 100);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    setIsScrolled(false);
+  };
 
   const fetchPokemons = async () => {
     try {
@@ -65,13 +79,6 @@ function PokemonList() {
     displayPokemons(filteredList);
   };
 
-  const handleFilterChange = (filterType) => {
-    setFilterByNumber(filterType === 'number');
-    setFilterByName(filterType === 'name');
-    setSearchTerm('');
-    displayPokemons(allPokemons);
-  };
-
   const clearSearch = () => {
     setSearchTerm('');
     displayPokemons(allPokemons);
@@ -90,7 +97,7 @@ function PokemonList() {
 
   return (
     <div className="pokemon-list-container">
-      <div className="search-bar">
+      <div className={`search-bar ${isScrolled ? 'hidden' : ''}`}>
         <div className="search-input-wrapper">
           <input
             type="text"
@@ -105,9 +112,17 @@ function PokemonList() {
             </button>
           )}
         </div>
-       
       </div>
-      
+
+      <div className={`navbar-search-icon ${isScrolled ? 'visible' : ''}`}>
+        <button className="search-icon-btn" onClick={() => setIsScrolled(false)}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+
       {notFoundMessage && (
         <p id="not-found-message">
           No Pokémon found matching your search criteria
