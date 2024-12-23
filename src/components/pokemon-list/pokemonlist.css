@@ -24,12 +24,15 @@
 
 #search-input {
     width: 100%;
-    padding: 1rem 3rem 1rem 1.5rem;
     border: 2px solid #e1e4e8;
     border-radius: 12px;
     font-size: 1.1rem;
     transition: all 0.3s ease;
     background: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 5px;
+    margin-top: 5px;
 }
 
 #search-input:focus {

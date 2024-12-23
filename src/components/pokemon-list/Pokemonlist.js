@@ -105,26 +105,7 @@ function PokemonList() {
             </button>
           )}
         </div>
-        <div className="filter-options">
-          <label className="filter-label">
-            <input
-              type="radio"
-              id="number"
-              checked={filterByNumber}
-              onChange={() => handleFilterChange('number')}
-            />
-            Filter by Number
-          </label>
-          <label className="filter-label">
-            <input
-              type="radio"
-              id="name"
-              checked={filterByName}
-              onChange={() => handleFilterChange('name')}
-            />
-            Filter by Name
-          </label>
-        </div>
+       
       </div>
       
       {notFoundMessage && (
