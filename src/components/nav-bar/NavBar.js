@@ -7,6 +7,15 @@ import Pokeball from '/pokemon-api/src/assets/pokeball1.jpg'
 const NavBar = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const pokedexClick = () => {
     navigate('/');
@@ -31,10 +40,25 @@ const NavBar = () => {
     setIsMenuOpen(!isMenuOpen);
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <nav className='navbar'>
         <div className='left-nav'>
             <Link to="/" className='nav-item desktop-only'>Pokédex</Link>
+            {isScrolled && (
+              <button className="nav-search-icon" onClick={scrollToTop}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+            )}
         </div>
 
         <div className='mobile-nav'>

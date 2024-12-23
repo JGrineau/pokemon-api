@@ -26,6 +26,7 @@
 .left-nav {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .nav-item {
@@ -209,4 +210,23 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
     background: linear-gradient(135deg, #2980b9, #2573a7);
+}
+
+.nav-search-icon {
+    background: none;
+    border: none;
+    color: #2c3e50;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+}
+
+.nav-search-icon:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
 }
