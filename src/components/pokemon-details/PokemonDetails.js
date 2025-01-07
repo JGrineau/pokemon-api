@@ -77,9 +77,9 @@ const PokemonDetails = () => {
             <header className="header">
                 <div className="header-wrapper">
                     <div className="header-wrap">
-                        <a onClick={() => navigate('/')} className="back-btn-wrap" style={{ cursor: 'pointer' }}>
+                        <button onClick={() => navigate('/')} className="back-btn-wrap" style={{ cursor: 'pointer', background: 'none', border: 'none' }}>
                             <img src="/assets/back-to-home.svg" alt="back to home" className="back-btn" />
-                        </a>
+                        </button>
                         <div className="name-wrap">
                             <h1 className="name">{pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h1>
                         </div>
@@ -91,9 +91,9 @@ const PokemonDetails = () => {
             </header>
             <div className="featured-img">
                 {parseInt(id) > 1 && (
-                    <a href="#" className="arrow left-arrow" onClick={handlePrevPokemon}>
+                    <button className="arrow left-arrow" onClick={handlePrevPokemon} style={{ background: 'none', border: 'none' }}>
                         <img src="/assets/chevron_left.svg" alt="back" />
-                    </a>
+                    </button>
                 )}
                 <div className="detail-img-wrapper">
                     <img 
@@ -105,9 +105,9 @@ const PokemonDetails = () => {
                     />
                 </div>
                 {parseInt(id) < MAX_POKEMON && (
-                    <a href="#" className="arrow right-arrow" onClick={handleNextPokemon}>
+                    <button className="arrow right-arrow" onClick={handleNextPokemon} style={{ background: 'none', border: 'none' }}>
                         <img src="/assets/chevron_right.svg" alt="forward" />
-                    </a>
+                    </button>
                 )}
             </div>
             <div className="detail-card-detail-wrapper">
