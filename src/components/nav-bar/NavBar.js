@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './navbar.css'
 import Button from '../button/Button'
-import Pokeball from '/pokemon-api/src/assets/pokeball1.jpg'
+import Pokeball from '../../assets/pokeball1.jpg'
 
 const NavBar = () => {
   const navigate = useNavigate();
