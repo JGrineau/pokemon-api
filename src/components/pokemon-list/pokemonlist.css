@@ -43,7 +43,8 @@
     border: none;
     border-radius: 20px;
     font-size: 1.1rem;
-    padding: 1.2rem 3rem 1.2rem 1.5rem;
+    /* padding: 1.2rem 3rem 1.2rem 1.5rem; */
+    padding: 1rem;
     background: transparent;
     color: #2c3e50;
     transition: all 0.3s ease;

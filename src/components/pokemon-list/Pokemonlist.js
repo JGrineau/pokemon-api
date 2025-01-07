@@ -24,13 +24,13 @@ function PokemonList() {
     setIsScrolled(scrollPosition > 100);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-    setIsScrolled(false);
-  };
+  // const scrollToTop = () => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth'
+  //   });
+  //   setIsScrolled(false);
+  // };
 
   const fetchPokemons = async () => {
     try {
