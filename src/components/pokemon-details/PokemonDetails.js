@@ -106,7 +106,7 @@ const PokemonDetails = () => {
                 </div>
                 {parseInt(id) < MAX_POKEMON && (
                     <button className="arrow right-arrow" onClick={handleNextPokemon} style={{ background: 'none', border: 'none' }}>
-                        <img src="/assets/chevron_right.svg" alt="forward" />
+                        <img src="/assets/chevron_right.svg" alt="next" />
                     </button>
                 )}
             </div>

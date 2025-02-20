@@ -55,7 +55,12 @@ export const usePokemonDetails = (id) => {
         const entry = pokemonSpecies.flavor_text_entries.find(
             entry => entry.language.name === 'en'
         );
-        return entry ? entry.flavor_text.replace(/\\f/g, ' ') : '';
+        return entry 
+            ? entry.flavor_text
+                .replace(/[\f\n\r\t\v]/g, ' ')  // Replace any whitespace character with a space
+                .replace(/\s+/g, ' ')           // Replace multiple spaces with a single space
+                .trim()                         // Remove leading/trailing spaces
+            : '';
     };
 
     const handlePrevPokemon = (e) => {
