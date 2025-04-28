@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// Signup page removed as per user request.
+
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './signup.css';
@@ -47,14 +48,18 @@ const Signup = () => {
         const newErrors = validateForm();
         if (Object.keys(newErrors).length === 0) {
             // Send a POST request to the server using axios
-            axios.post('http://localhost:5000/signup', {
+            axios.post('http://localhost:5000/api/auth/signup', {
                 username: formData.username,
                 email: formData.email,
                 password: formData.password
             })
             .then(response => {
                 console.log('Success:', response.data);
-                navigate('/login');
+                // Store JWT token and user info in localStorage
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                // Redirect to user home page
+                navigate('/user-home');
             })
             .catch(error => {
                 console.error('Error:', error);

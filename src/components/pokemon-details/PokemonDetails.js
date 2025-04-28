@@ -37,6 +37,38 @@ const PokemonDetails = () => {
         MAX_POKEMON
     } = usePokemonDetails(id);
 
+    // FAVORITES LOGIC (must be before any returns)
+    const [isFavorite, setIsFavorite] = React.useState(false);
+    React.useEffect(() => {
+        if (!pokemon) return;
+        const favs = localStorage.getItem('favorites');
+        if (favs) {
+            setIsFavorite(JSON.parse(favs).some(fav => fav.id === pokemon.id));
+        } else {
+            setIsFavorite(false);
+        }
+    }, [pokemon]);
+
+    const handleFavorite = () => {
+        let favs = localStorage.getItem('favorites');
+        favs = favs ? JSON.parse(favs) : [];
+        if (isFavorite) {
+            // Remove from favorites
+            const updated = favs.filter(fav => fav.id !== pokemon.id);
+            localStorage.setItem('favorites', JSON.stringify(updated));
+            setIsFavorite(false);
+        } else {
+            // Add to favorites
+            const newFav = {
+                id: pokemon.id,
+                name: pokemon.name,
+                image: pokemon.sprites.front_default || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemon.id}.svg`
+            };
+            localStorage.setItem('favorites', JSON.stringify([...favs, newFav]));
+            setIsFavorite(true);
+        }
+    };
+
     const getMainTypeColor = () => {
         if (!pokemon || !pokemon.types.length) return '#A8A878';
         const mainType = pokemon.types[0].type.name;
@@ -72,6 +104,7 @@ const PokemonDetails = () => {
         borderColor: mainColor
     };
 
+
     return (
         <main className="detail-main main" style={mainStyle}>
             <header className="header">
@@ -103,6 +136,13 @@ const PokemonDetails = () => {
                             e.target.src = pokemon.sprites.front_default;
                         }}
                     />
+                    <button 
+                        className={`favorite-btn${isFavorite ? ' favorited' : ''}`}
+                        onClick={handleFavorite}
+                        style={{ marginTop: 10, padding: '6px 16px', borderRadius: 20, border: 'none', background: isFavorite ? '#FFD700' : '#eee', color: isFavorite ? '#333' : '#555', cursor: 'pointer', fontWeight: 600 }}
+                    >
+                        {isFavorite ? '★ Favorited' : '☆ Add to Favorites'}
+                    </button>
                 </div>
                 {parseInt(id) < MAX_POKEMON && (
                     <button className="arrow right-arrow" onClick={handleNextPokemon} style={{ background: 'none', border: 'none' }}>

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+// Login page removed as per user request.
+
 import { useNavigate } from 'react-router-dom';
-// import { toast } from 'react-toastify';
-import Button from '../button/Button';
 import axios from 'axios';
 import './Login.css';
 
@@ -27,6 +26,9 @@ const Login = () => {
             console.log('Login successful:', response.data);
             
             if (response.data.message === 'Login successful') {
+                // Store JWT token and user info in localStorage
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 // Redirect to home page on successful login
                 navigate('/');
             }
@@ -65,13 +67,13 @@ const Login = () => {
                             placeholder="Enter your password"
                         />
                     </div>
-                    <Button 
-                        type="submit" 
-                        variant="primary"
+                    <button 
+                        type="submit"
                         className="login-button"
-                        text={loading ? 'Logging in...' : 'Login'}
                         disabled={loading}
-                    />
+                    >
+                        {loading ? 'Logging in...' : 'Login'}
+                    </button>
                 </form>
             </div>
         </div>

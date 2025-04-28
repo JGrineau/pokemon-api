@@ -6,7 +6,7 @@ import Pokeball from '../../assets/pokeball1.jpg'
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [isScrolled, setIsScrolled] = useState(false);
 
   React.useEffect(() => {
@@ -21,24 +21,7 @@ const NavBar = () => {
     navigate('/');
   }
 
-  const handleLogin = () => {
-    navigate('/login');
-    setIsMenuOpen(false);
-  }
 
-  const handleHome = () => {
-    navigate('/');
-    setIsMenuOpen(false);
-  }
-
-  const handleSignup = () => {
-    navigate('/signup');
-    setIsMenuOpen(false);
-  }
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  }
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -81,30 +64,13 @@ const NavBar = () => {
           </div>
         </div>
 
-        <button className='hamburger' onClick={toggleMenu} aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <div className='right-nav'>
 
-        <div className={`right-nav ${isMenuOpen ? 'active' : ''}`}>
             <Button 
-              variant="primary" 
+              variant="secondary" 
               className='nav-item' 
-              onClick={handleHome} 
-              text="Home" 
-            />
-            <Button 
-              variant="primary" 
-              className='nav-item' 
-              onClick={handleLogin} 
-              text="Login" 
-            />
-            <Button 
-              variant="primary" 
-              className='nav-item' 
-              onClick={handleSignup} 
-              text="Sign Up" 
+              onClick={() => navigate('/compare')} 
+              text="Compare" 
             />
         </div> 
     </nav>

@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/nav-bar/NavBar';
-import Login from './components/login-page/Login';
 import PokemonList from './components/pokemon-list/Pokemonlist';
 import PokemonDetails from './components/pokemon-details/PokemonDetails';
-import Signup from './components/signup-page/Signup';
+import UserHome from './components/user-home/UserHome';
+import Compare from './components/compare/Compare';
 
 function App() {
   return (
@@ -11,9 +11,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<PokemonList />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/pokemon/:id" element={<PokemonDetails />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/user-home" element={<UserHome />} />
+        <Route path="/compare" element={<Compare />} />
       </Routes>
     </Router>
   );
